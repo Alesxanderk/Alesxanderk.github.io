@@ -88,11 +88,11 @@ body{
 	font-size:18px;
 	font-weight:bold;
 }
-.libro{
+.libro,segmento{
 	text-align:justify;
 	margin:12px;
 }
-.titulo_libro{
+.titulo_libro,.titulo_corto{
 	text-align:center;
 	font-size:24px;
 	font-weight:bold;
@@ -110,6 +110,8 @@ body{
 	font-weight:bold;
 	font-size:18px;
 }
+
+
 p{
 	text-align:justify;
 }
