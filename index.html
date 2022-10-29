@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Escritos e Historias</title>
+		<style>
+			html,body{
+				margin:0px;
+				display:flex;
+				-webkit-touch-callout:none;
+				-webkit-user-select:none;
+				-khtml-user-select:none;
+				-moz-user-select:none;
+				-ms-user-select:none;
+				user-select:none;
+			}
+			body{
+				background-color:white;
+				flex-direction:column;
+				flex:1;
+			}
+			#libros{
+				display:flex;
+				flex-direction:column;
+			}
+			#cortos{
+				display:none;
+				flex-direction:column;
+			}
+			#escrito{
+				display:none;
+				flex-direction:column;
+			}
+			.titulo{
+				background-color:black;
+				color:white;
+				display:flex;
+				justify-content:center;
+				align-items:center;
+				font-size:24px;
+				font-weight:bold;
+				padding:16px;
+				transition:all 0.4s;
+			}
+			.titulo:hover{
+				text-decoration-color:#425f59;
+				text-decoration-line:underline;
+			}
+			.barra{
+				background-color:black;
+				color:white;
+				display:flex;
+				justify-content:space-evenly;
+				align-items:center;
+				padding:8px;
+			}
+			.boton{
+				font-size:18px;
+				font-weight:bold;
+				color:white;
+				padding:8px;
+				transition:all 0.4s;
+				
+			}
+			.boton:hover{
+				text-decoration-color:#425f59;
+				text-decoration-line:underline;
+				cursor:pointer;
+			}
+			.descripcion{
+				background-color:#425f59;
+				color:#f0f6e8;
+				display:flex;
+				justify-content:center;
+				align-items:center;
+				text-align:justify;
+				padding:16px;
+			}
+			.listado{
+				margin:16px;
+				display:flex;
+				flex-direction:row;
+				flex-wrap:wrap;
+			}
+			.bloque{
+				color:black;
+				margin:8px;
+				padding:8px;
+				border:1px solid #425f59;
+				transition:all 0.4s;
+			}
+			.bloque:hover{
+				color:white;
+				background-color:#425f59;
+			}
+			.saga{
+				font-size:18px;
+				font-weight:bold;
+			}
+			.libro{
+				text-align:justify;
+				margin:12px;
+			}
+			p{text-align:justify;}
+		</style>
+		<script>
+			function mostrar(tipo){
+				switch(tipo){
+					case 0:
+						document.getElementById("libros").style.display='flex';
+						document.getElementById("cortos").style.display='none';
+						document.getElementById("escrito").style.display='none';
+					break;
+					case 1:
+						document.getElementById("libros").style.display='none';
+						document.getElementById("cortos").style.display='flex';
+						document.getElementById("escrito").style.display='none';
+					break;
+					case 2:
+						document.getElementById("libros").style.display='none';
+						document.getElementById("cortos").style.display='none';
+						document.getElementById("escrito").style.display='flex';
+					break;
+				};
+			};
+		</script>
+	</head>
+	<body>
+		<div class="titulo">Escritos e Historias</div>
+		<div class="barra">
+			<div class="boton" onclick="mostrar(0)">Libros Leídos</div>
+			<div class="boton" onclick="mostrar(1)">Cortos Escritos</div>
+			<div class="boton" onclick="mostrar(2)">Me Falta el Alba</div>
+		</div>
+		<div id="libros">
+			<div class="descripcion">Aquí puedo encontrar todos los libros qué he leído, desde que empecé a tomar nota: 05 Junio 2022</div>
+			<div class="listado">
+				<div class="bloque">
+					<div class="saga">La Selección</div>
+					<div class="libro">La Selección</div>
+					<div class="libro">La Élite</div>
+					<div class="libro">La Elegida</div>
+					<div class="libro">La Heredera</div>
+					<div class="libro">La Corona</div>
+				</div>
+				<div class="bloque">
+					<div class="saga">Extras la Selección</div>
+					<div class="libro">La Reina</div>
+					<div class="libro">El Príncipe</div>
+					<div class="libro">El Guardián</div>
+					<div class="libro">La Favorita</div>
+					<div class="libro">Epílogo</div>
+					<div class="libro">Epílogo la Corona</div>
+				</div>
+				<div class="bloque">
+					<div class="saga">El Arco de la Guadaña</div>
+					<div class="libro">Siega</div>
+					<div class="libro">Nimbo</div>
+					<div class="libro">Trueno</div>
+				</div>
+				<div class="bloque">
+					<div class="saga">Desconexión</div>
+					<div class="libro">Desconexión</div>
+					<div class="libro">Reconexión</div>
+					<div class="libro">Inconexión</div>
+					<div class="libro">Conexión</div>
+				</div>
+				<div class="bloque">
+					<div class="saga">Luna Helada</div>
+					<div class="libro">La Misión Encelado</div>
+					<div class="libro">La Sonda Titán</div>
+					<div class="libro">Encuentro en Ío</div>
+					<div class="libro">Regreso a Encelado</div>
+				</div>
+				<div class="bloque">
+					<div class="saga">Crónicas Lunares</div>
+					<div class="libro">Cinder</div>
+				</div>
+				<div class="bloque">
+					<div class="saga">Extras Crónicas Lunares</div>
+					<div class="libro">La Guardián</div>
+					<div class="libro">Fallos</div>
+					<div class="libro">El Pequeño Androide</div>
+					<div class="libro">La Mecánica</div>
+					<div class="libro">El Ejército de la Reina</div>
+					<div class="libro">La Guía de Carswell para la Buena Suerte</div>
+				</div>
+				<div class="bloque">
+					<div class="saga">Overlord</div>
+					<div class="libro">El Rey No-muerto</div>
+					<div class="libro">El Guerrero oscuro</div>
+					<div class="libro">La Valquiria Sangrienta</div>
+					<div class="libro">Los Héroes Hombres Lagarto</div>
+					<div class="libro">Los Hombres del Reino 1</div>
+					<div class="libro">Los Hombres del Reino 2</div>
+					<div class="libro">Los Invasores de la Gran Tumba</div>
+				</div>
+				<div class="bloque">
+					<div class="saga">Varios</div>
+					<div class="libro">Crimen y castigo</div>
+					<div class="libro">El Juego de los Mundos</div>
+					<div class="libro">Sed</div>
+					<div class="libro">El Retrato de Dorian Grey</div>
+					<div class="libro">Madurez Voluntaria</div>
+					<div class="libro">Las Aventuras de Tom Sawyer</div>
+					<div class="libro">Historias de un Pepe</div>
+					<div class="libro">La Bendición de 118 Dioses (T.1)</div>
+					<div class="libro">El Riesgo de Amar</div>
+					<div class="libro">Tierna Furia de Amor</div>
+				</div>
+			</div>
+		</div>
+		<div id="cortos">
+			<div class="listado">
+				<div class="bloque">
+					<div class="saga">¿Qué?</div>
+					<div class="libro">
+						<p>Apareció frente a mí, formado del aire, una figura humana; no entendí el cómo ni el porqué, un halo oscuro nació de él y se extendió hasta cubrirlo todo, sin apagar el brillo del sol, sabía que así era, aún cuando mis ojos no podían verlo.</p>
+						<p>Sentí pánico, pavor y confusión… Volteé y cerré los ojos, no quería seguir observando, pero su figura, y esa negrura estaban quemadas en mi mente.</p>
+						<p>—¡Ey! —Una voz humana… dirigí mi mirada atraído por esa disonancia, esa persona, no… esa cosa no podía tener una voz tan… normal; al abrir los ojos le ví de nuevo.</p>
+						<p>Una figura humana, sin entender el cómo ni el porqué, un halo blanco nació de él y se extendió hasta cubrirlo todo, sin sofocar el brillo del sol, sabía que era así, aún cuando mis ojos no podían verlo.</p>
+						<p>Por un momento sentí tranquilidad, hasta que mi mente le dió pasó a una verdad que no quería aceptar, la figura que emanaba esa blancura era la misma.</p>
+						<p>No hubo tiempo para el miedo, angustia o ira, la certeza de la pérdida de toda esperanza era lo único en mi mente.</p>
+						<p>Destellando entre la más cálida luz y la más aberrante oscuridad, se acercó a mí, incapaz de actuar según mis instintos, mi mente fue consumida por eso que fingía ser humano.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="escrito">
+			<div class="listado">
+				<div class="bloque">
+					<div class="saga">Me Falta el Alba</div>
+					<div class="libro"><p>Aún no he subido nada de lo escrito aquí...</p></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
