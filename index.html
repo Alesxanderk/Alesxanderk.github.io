@@ -1,152 +1,24 @@
 <!DOCTYPE html>
-<html lang="es" dir="ltr">
+<html>
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Escritos e Historias</title>
-		<link rel="stylesheet" href="./index.css">
-		<script type="text/javascript" src="./index.js"></script>
+		<title>Lectura</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="./estilo.css">
+		<script src="./datos.js"></script>
+		<script src="./logica.js"></script>
 	</head>
-	<body onload="calcular()">
-		<div class="titulo">Escritos e Historias</div>
-		<div class="barra">
-			<div class="boton" onclick="mostrar(0)">Libros Leídos</div>
-			<div class="boton" onclick="mostrar(1)">Cortos Escritos</div>
-			<div class="boton" onclick="mostrar(2)">Me Falta el Alba</div>
-		</div>
-		<div id="libros">
-			<div class="descripcion">Aquí puedo encontrar todos los libros qué he leído, desde que empecé a tomar nota: 05 Junio 2022</div>
-			<div class="listado">
-				<div class="bloque">
-					<div class="saga">La Selección</div>
-					<div class="libro">La Selección</div>
-					<div class="libro">La Élite</div>
-					<div class="libro">La Elegida</div>
-					<div class="libro">La Heredera</div>
-					<div class="libro">La Corona</div>
-				</div>
-				<div class="bloque">
-					<div class="saga">Extras la Selección</div>
-					<div class="libro">La Reina</div>
-					<div class="libro">El Príncipe</div>
-					<div class="libro">El Guardián</div>
-					<div class="libro">La Favorita</div>
-					<div class="libro">Epílogo</div>
-					<div class="libro">Epílogo la Corona</div>
-				</div>
-				<div class="bloque">
-					<div class="saga">El Arco de la Guadaña</div>
-					<div class="libro">Siega</div>
-					<div class="libro">Nimbo</div>
-					<div class="libro">Trueno</div>
-				</div>
-				<div class="bloque">
-					<div class="saga">Desconexión</div>
-					<div class="libro">Desconexión</div>
-					<div class="libro">Reconexión</div>
-					<div class="libro">Inconexión</div>
-					<div class="libro">Conexión</div>
-				</div>
-				<div class="bloque">
-					<div class="saga">Luna Helada</div>
-					<div class="libro">La Misión Encelado</div>
-					<div class="libro">La Sonda Titán</div>
-					<div class="libro">Encuentro en Ío</div>
-					<div class="libro">Regreso a Encelado</div>
-				</div>
-				<div class="bloque">
-					<div class="saga">Crónicas Lunares</div>
-					<div class="libro">Cinder</div>
-<div class="libro">Scarlet</div>
-				</div>
-				<div class="bloque">
-					<div class="saga">Extras Crónicas Lunares</div>
-					<div class="libro">La Guardián</div>
-					<div class="libro">Fallos</div>
-					<div class="libro">El Pequeño Androide</div>
-					<div class="libro">La Mecánica</div>
-					<div class="libro">El Ejército de la Reina</div>
-					<div class="libro">La Guía de Carswell para la Buena Suerte</div>
-				</div>
-				<div class="bloque">
-					<div class="saga">Overlord</div>
-					<div class="libro">El Rey No-muerto</div>
-					<div class="libro">El Guerrero oscuro</div>
-					<div class="libro">La Valquiria Sangrienta</div>
-					<div class="libro">Los Héroes Hombres Lagarto</div>
-					<div class="libro">Los Hombres del Reino 1</div>
-					<div class="libro">Los Hombres del Reino 2</div>
-					<div class="libro">Los Invasores de la Gran Tumba</div>
-				</div>
-				<div class="bloque">
-					<div class="saga">Varios</div>
-					<div class="libro">Crimen y castigo</div>
-					<div class="libro">El Juego de los Mundos</div>
-					<div class="libro">Sed</div>
-					<div class="libro">El Retrato de Dorian Grey</div>
-					<div class="libro">Madurez Voluntaria</div>
-					<div class="libro">Las Aventuras de Tom Sawyer</div>
-					<div class="libro">Historias de un Pepe</div>
-					<div class="libro">La Bendición de 118 Dioses (T.1)</div>
-					<div class="libro">El Riesgo de Amar</div>
-					<div class="libro">Tierna Furia de Amor</div>
-				</div>
+	<body onload="cargar()">
+		
+		<div id="seleccion"></div>
+		<div id="lector">
+			<div class="botones">
+				<div class="boton" onclick="anterior_oracion()"><img src="./svg/left.svg"></img></div>
+				<div class="boton" onclick="control_vistas(0)"><img src="./svg/close.svg"></img></div>
+				<div class="boton" onclick="siguiente_oracion()"><img src="./svg/right.svg"></img></div>
 			</div>
-		</div>
-		<div id="cortos">
-			<div class="listado">
-				<div class="bloque">
-					<div class="titulo_corto">¿Qué?</div>
-					<div class="segmento">
-						<p>Apareció frente a mí, formado del aire, una figura humana; no entendí el cómo ni el porqué, un halo oscuro nació de él y se extendió hasta cubrirlo todo, sin apagar el brillo del sol, sabía que así era, aún cuando mis ojos no podían ver esa negrura.</p>
-						<p>Sentí pánico, pavor y confusión… Volteé y cerré los ojos, no quería seguir observando, pero su figura, y esa negrura estaban quemadas en mi mente.</p>
-						<p>—¡Ey! —Una voz humana… dirigí mi mirada atraído por esa disonancia, esa persona, no… esa cosa no podía tener una voz tan… normal; al abrir los ojos le ví de nuevo.</p>
-						<p>Esa figura humana con un halo blanco que nació de él y se extendió hasta cubrirlo todo, sin sofocar el brillo del sol, de nuevo, sabía que era así, aún cuando mis ojos no podían ver ese brillo.</p>
-						<p>Por un momento sentí calidad proveniente de eso, hasta que mi mente le dió pasó a una verdad que no quería aceptar.</p>
-						<p>No hubo tiempo para el miedo o angustia, destellando entre la más cálida luz y la más aberrante oscuridad, se acercó a mí; mi mente fue consumida por la visión de eso que ni fingía ser humano.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="escrito">
-			<div class="listado">
-				<div class="bloque">
-					<div class="segmento">
-						<div class="titulo_libro">Me Falta el Alba</div>
-						<div class="subtitulo">Inicio</div>
-						<p>¿Te imaginas preparándote para lo que consideras un cambio positivo en tu vida y qué al mismo tiempo recibas un diagnóstico médico que toma el volante dirigiéndose a una dirección absolutamente contraria?</p>
-						<p>Es lo que tantas personas deben afrontar, con cierto desasosiego, en algún punto de sus vidas, con esperanza en que podrán cambiar a una mejor ruta o al menos detenerse por un momento.</p>
-						<div class="separador">◇◇◇</div>
-						<p>—¡Amor, ya llegue! —le escuché decir mientras acomodaba sus cosas. —¿Dónde estás?</p>
-						<p>—Estoy en la cocina… —Le ví entrar, el dulce tono de hace un momento contrastaba con su cansada expresión. —Estuve ordenando algunas cosas, no hemos sacado todo de las cajas.</p>
-						<p>—Deja eso un rato, el sol acaba de irse, salgamos un rato, ¿si?</p>
-						<p>No pude evitar que mi frustración y envidia se notará en mi rostro y se que ella lo notó, aún así su expresión y ánimo no cambió, me hizo sentir culpa y pena.</p>
-						<p>¿Por qué tenía esos sentimientos? Desde hace unas semanas muchas personas no podían dejar su hogar.</p>
-						<p>¿El porqué de eso? Una extraña infección alteró la fisiología de muchas personas, haciéndolas severamente susceptibles a la luz solar; cual cuento de hadas, yo y miles de personas más, somos lo más cercano que la biología puede recrear como vampiros; pero sin magia, ni superfuerza, volar, nada de eso…</p>
-						<div class="subtitulo">El comienzo</div>
-						<p>—Pasajeros, estamos a punto de arribar a nuestro destino, por favor abrochar sus cinturones de seguridad y disculpen las turbulencias.</p>
-						<p>El sonido de los cinturones de seguridad se escucharon a lo largo de todos los asientos, junto al murmullo de las conversaciones nerviosas que daban inicio.</p>
-						<p>—¡Estoy tan feliz! Nuestra propia casa… —le escuché decir a la chica que estaba a mi lado, Sasha, con quien me casé apenas hace unas horas. —aunque tendremos que comenzar un poco de cero. —Su sonrisa y el brillo de sus ojos color ámbar, junto a la luz cálida del amanecer que atravesaba las ventanas del avión, me paralizó un momento.</p>
-						<p>—Si no nos estrellamos ahora —le susurré entre risas, un mal chiste nunca estaba de más.</p>
-						<p>—Dilo en voz alta. —me retó ella, sonreí nervioso, era nuestra primera vez en un avión y mi idea para aliviar mi tensión no fue lo mejor.</p>
-						<p>—Estoy emocionado también, hay varios centros botánicos, compremos plantas coloridas para nuestro jardín —le mencioné con emoción.</p>
-						<p>—Yo quiero que me acompañes para comprar nuevo equipo y ver a los proveedores, tendré que formar nueva clientela. —mencionó con una mezcla de duda y excitación.</p>
-						<p>—Lo harás bien, estoy ansioso por ver las piezas ya realizadas de tu libro… —Sentí como el asiento se movía en todas direcciones interrumpiendo mis palabras, junto con el recuerdo sobre la mayor posibilidad de accidentes al despegar y aterrizar, el pánico se hizo evidente en mi rostro.</p>
-						<p>—El capitán iniciará las maniobras de aterrizaje… —La voz tranquila de la asistente de vuelo sonó por los parlantes.</p>
-						<p>—Tranquilo Alex, no pasará nada. —sujetó mi mano y la apretó aún más, eso me reconfortó y cerré los ojos hasta que todo pasara.</p>
-						<div class="separador">◇◇◇</div>
-						<p>—La pista de desembarque está lista a su izquierda, por favor descender en orden.</p>
-						<p>Quien diría que la paciente cero estuvo con nosotros durante todo el vuelo, incubando, mostrando sus efectos e infectado a unos cuantos; desearía haber prestado atención a ello, pero ¿quién se preocupa por la urticaria de alguien desconocido?</p>
-						<p>—Señora sus brazos y rostro están rojos, ¿Se encuentra bien?</p>
-						<p>—Si, muchas gracias, he tenido picor pero nada más.</p>
-						<p>—¿Usted es alérgica a algo? Eso no se ve nada bien.</p>
-						<p>—No se preocupe, me atenderé tan pronto baje del avión.</p>
-						<p>—Está bien, espero que su viaje haya sido placentero.</p>
-						<p>Cuando la señora salió del avión y caminó por la pasarela embarque, el sol dió directo sobre su piel, el color rojo en su rostro y brazos era lo de menos, pústulas le creciendo anormalmente rápido, la desesperación y gritos de dolor no duraron mucho, desmayarse fue una bendición.</p>
-						<p>Pasajeros y personal de vuelo se apresuraron a brindar ayuda, mientras ella seguía empeorando; el centro de asistencia del aeropuerto hizo pruebas y reportó que fue una reacción alérgica grave, sin más información, alegando que solo familiares podían tener más datos.</p>
-					</div>
-				</div>
-			</div>
+			<div id="oracion"></div>
+			<div class="boton" onclick="iniciar_efecto()"><img src="./svg/repeat.svg"></img></div>
 		</div>
 	</body>
 </html>
