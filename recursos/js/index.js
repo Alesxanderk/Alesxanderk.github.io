@@ -3,7 +3,7 @@ window.onbeforeunload=detener_tts;
 let dirHandle;
 async function directorio(){
 	
-	dirHandle=await window.showDirectoryPicker({startIn:'desktop'});
+	dirHandle=await window.showDirectoryPicker();
 	
 	if(dirHandle.kind==='directory'){
 		
