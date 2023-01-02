@@ -1,0 +1,121 @@
+::-webkit-Scrollbar{display:none;}
+
+.material{background-image:url(../images/material.png);}
+.pagina{background-image:url(../images/pagina.png);}
+.svg{background-repeat:no-repeat;background-size:24px 24px;min-width:24px;min-height:24px;background-position:center;}
+.abrir{background-image:url(../svg/abrir.svg);}
+.pantalla{background-image:url(../svg/pantalla.svg);}
+.tts{background-image:url(../svg/tts.svg);}
+.menu{background-image:url(../svg/menu.svg);}
+.izq{background-image:url(../svg/izq.svg);}
+.der{background-image:url(../svg/der.svg);}
+
+html,body{
+	display:flex;
+	margin:0px;
+	min-width:100%;
+	max-width:100%;
+	min-height:100%;
+	max-height:100%;
+	-webkit-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+	font-size:16px;
+	overflow:hidden;
+}
+
+body{
+	color:black;
+	display:grid;
+	grid-template-columns:repeat(10,1fr);
+	grid-template-rows:repeat(10,1fr);
+}
+
+header{
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-evenly;
+    align-items:center;
+    grid-column:1/11;
+    grid-row:1;
+}
+
+.boton{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	padding:4px;
+}
+
+.desactivado{
+	pointer-events:none;
+	background:gray;
+	opacity:0.2;
+}
+
+#valor_pagina{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+#visor{
+	grid-column:2/11;
+	grid-row:2/11;
+	padding-left:16px;
+	padding-right:16px;
+	padding-bottom:16px;
+}
+
+img{max-width:60%;}
+
+#progreso{
+	grid-column:1;
+    grid-row:2/11;
+	padding:16px;
+}
+
+#valor_progreso{
+	max-width:100%;
+	min-width:100%;
+	border-radius:16px;
+}
+
+.no_clic{pointer-events:none;}
+
+#modal_libreria{display:none;}
+#modal_tts_ajustes{display:none;}
+
+.fondo_modal{
+	background-color:rgba(0,0,0,0.5);
+	justify-content:center;
+	align-items:center;
+	min-height:100%;
+	max-height:100%;
+	min-width:100%;
+	max-width:100%;
+	position:fixed;
+	z-index:100;
+}
+
+.tarjeta_modal{
+	color:white;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	padding:24px;
+	gap:16px;
+	position:fixed;
+}
+
+.horizontal{
+	display:flex;
+	min-width:100%;
+	max-width:100%;
+	justify-content:space-around;
+}
+
+.range_ancho{width:80%;}
+.rango_pagina{width:60%;};

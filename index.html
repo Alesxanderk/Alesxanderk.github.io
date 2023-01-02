@@ -4,22 +4,23 @@
 		<title>EPUB</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="./recursos/estilo.css">
+		<link rel="stylesheet" href="./recursos/css/index.css">
 		<style id="externo"></style>
-		<script src="./recursos/jszip.js"></script>
-		<script src="./recursos/logica.js"></script>
+		<script src="./recursos/js/jszip.js"></script>
+		<script src="./recursos/js/index.js"></script>
 	</head>
 	<body onload="cargar()">
 		<header id="encabezado" class="material">
 			<div class="horizontal">
-				<div class="boton" onclick="solicitar_archivo()"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" /></svg></div>
-				<div class="boton" onclick="p_completa()"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z" /></svg></div>
-				<div class="boton" onclick="iniciar_tts()"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M8,7A2,2 0 0,1 10,9V14A2,2 0 0,1 8,16A2,2 0 0,1 6,14V9A2,2 0 0,1 8,7M14,14C14,16.97 11.84,19.44 9,19.92V22H7V19.92C4.16,19.44 2,16.97 2,14H4A4,4 0 0,0 8,18A4,4 0 0,0 12,14H14M21.41,9.41L17.17,13.66L18.18,10H14A2,2 0 0,1 12,8V4A2,2 0 0,1 14,2H20A2,2 0 0,1 22,4V8C22,8.55 21.78,9.05 21.41,9.41Z" /></svg></div>
-				<div class="boton" onclick="ajustes_tts()"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg></div>
+				<button onclick="directorio()">¿Dir?</button>
+				<div class="boton svg abrir" onclick="solicitar_archivo()"></div>
+				<div class="boton svg pantalla" onclick="p_completa()"></div>
+				<div class="boton svg tts" onclick="iniciar_tts()"></div>
+				<div class="boton svg menu" onclick="ajustes_tts()"></div>
 			</div>
 			<div id="botones_paginas" class="horizontal desactivado">
-				<div class="boton" onclick="manejo_pagina('-')"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" /></svg></div>
-				<div class="boton" onclick="manejo_pagina('+')"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg></div>
+				<div class="boton svg izq" onclick="manejo_pagina('-')"></div>
+				<div class="boton svg der" onclick="manejo_pagina('+')"></div>
 				<div id="valor_pagina" class="mostrar">0</div>
 				<input id="rango_paginas" class="rango_pagina" type="range" min="0" value="0" step="1" onchange="cambiar_pagina()"></input>
 			</div>
@@ -40,8 +41,15 @@
 					<div>Pitch</div>
 					<input class="range_ancho" type="range" min="0" max="2" value="1" step="0.1" id="pitch">
 				</div>
-				<select id="listado_voces_tts"></select>				
+				<select id="listado_voces_tts"></select>
 			</div>
-		</div>		
+		</div>
+		
+		<div id="modal_libreria" class="fondo_modal">
+			<div class="tarjeta_modal material">
+				<div id="libros"></div>
+			</div>
+		</div>	
+		
 	</body>
 </html>
