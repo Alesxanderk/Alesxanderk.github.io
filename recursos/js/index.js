@@ -1,24 +1,5 @@
 window.onbeforeunload=detener_tts;
 
-let dirHandle;
-async function directorio(){
-	
-	dirHandle=await window.showDirectoryPicker();
-	
-	if(dirHandle.kind==='directory'){
-		
-		for await (const [key,value] of dirHandle.entries()){
-			
-			document.getElementById('libros').innerHTML+=key;
-			document.getElementById('modal_libreria').style='display:flex;';
-		
-		//{key,value};
-		
-		};
-
-	};
-};
-
 /* Carga de archivo */
 
 let elem_archivo=document.createElement('input');
@@ -215,16 +196,13 @@ function procesar_opf(dir_raiz,dir_opf){
 			};
 		};
 		let lista_ncx=file.getElementsByTagName('itemref');
-		
 		let tam_lista_ncx=lista_ncx.length;
 		for(let i=0;i<tam_lista_ncx;i++){
 			let id_elem=lista_ncx[i]['attributes']['idref'].nodeValue;
 			let temp_elem=file.getElementById(id_elem);
 			dir_paginas.push(dir_raiz+temp_elem['attributes']['href'].nodeValue);
 		};
-		
 		elem_rango_paginas.setAttribute('max',dir_paginas.length-1);
-		
 		actualizar_paginas();
 		cargar_imagenes();
 		activar_botones();
@@ -282,9 +260,14 @@ function cargar_pagina(){
 			file=file.replaceAll(temp_nombre,temp_data);
 		};
 		file=parser.parseFromString(file,'text/html');
-		elem_contenido.innerHTML=file.body.innerHTML;		
+		elem_contenido.innerHTML=file.body.innerHTML;
+		let lista_nodos=elem_contenido.children;
+		max_parrafos=lista_nodos.length;
+		for(let i=0;i<max_parrafos;i++){
+			lista_nodos[i].setAttribute('id','id_'+i);
+			lista_nodos[i].setAttribute('data-id',''+i);
+		};
 		indice_parrafo=0;
-		max_parrafos=elem_contenido.childNodes.length;
 		maximo_scroll();
 	});
 };
@@ -457,7 +440,9 @@ function leer(){
 		return;
 	};
 	if(elem_contenido.textContent!==''){
-		let texto= elem_contenido.childNodes[indice_parrafo].textContent;
+		let elem_temp=document.getElementById('id_'+indice_parrafo);
+		cambiar_seleccionado(elem_temp);
+		let texto=elem_temp.textContent;
 		let voz=elem_listado_voces_tts.selectedOptions[0].getAttribute('data-name');
 		for(let i=0;i<voces.length;i++){
 			if (voces[i].name===voz){
@@ -480,3 +465,31 @@ function detener_tts(){
 /* Funciones auxilires */
 
 function entero(valor){return Math.floor(valor);};
+
+/* --- */
+
+function buscar_padre(){
+	let elem_hijo=event.target;
+	let salir=false;
+	while(!salir){
+		let elem_padre=elem_hijo.parentNode;
+		let valor=elem_padre.getAttribute('id');
+		if(valor==='contenido'){
+			let temp_id=elem_hijo.getAttribute('id');
+			indice_parrafo=parseInt(elem_hijo.getAttribute('data-id'),10);
+			cambiar_seleccionado(document.getElementById(temp_id));
+			detener_tts();
+			cancelado=false;
+			leer();
+			salir=true;
+		}else{elem_hijo=elem_padre;};
+	};
+};
+
+function cambiar_seleccionado(elem_nuevo){
+	let lista_seleccionado=document.getElementsByClassName('selecionado');
+	if(lista_seleccionado.length>0){
+		lista_seleccionado[0].classList.toggle('selecionado');
+	};
+	elem_nuevo.classList.toggle('selecionado');
+};

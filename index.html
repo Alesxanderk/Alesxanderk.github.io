@@ -12,7 +12,6 @@
 	<body onload="cargar()">
 		<header id="encabezado" class="material">
 			<div class="horizontal">
-				<button onclick="directorio()">¿Dir?</button>
 				<div class="boton svg abrir" onclick="solicitar_archivo()"></div>
 				<div class="boton svg pantalla" onclick="p_completa()"></div>
 				<div class="boton svg tts" onclick="iniciar_tts()"></div>
@@ -28,7 +27,7 @@
 		<div id="progreso" class="no_clic material">
 			<div id="valor_progreso" class="pagina"></div>
 		</div>
-		<div id="visor" onscroll="progreso()" class="pagina">
+		<div id="visor" onscroll="progreso()" onclick="buscar_padre()" class="pagina">
 			<div id="contenido"></div>
 		</div>
 		<div id="modal_tts_ajustes" class="fondo_modal">
@@ -44,12 +43,5 @@
 				<select id="listado_voces_tts"></select>
 			</div>
 		</div>
-		
-		<div id="modal_libreria" class="fondo_modal">
-			<div class="tarjeta_modal material">
-				<div id="libros"></div>
-			</div>
-		</div>	
-		
 	</body>
 </html>

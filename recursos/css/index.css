@@ -118,4 +118,5 @@ img{max-width:60%;}
 }
 
 .range_ancho{width:80%;}
-.rango_pagina{width:60%;};
+.rango_pagina{width:60%;}
+.selecionado{background-color:rgb(0,0,0,0.1);}
