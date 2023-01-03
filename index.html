@@ -7,21 +7,27 @@
 		<link rel="stylesheet" href="./recursos/css/index.css">
 		<style id="externo"></style>
 		<script src="./recursos/js/jszip.js"></script>
+		<script src="./recursos/js/jsstore.js"></script>
+		<script src="./recursos/js/jsstoreworker.js"></script>
 		<script src="./recursos/js/index.js"></script>
 	</head>
 	<body onload="cargar()">
 		<header id="encabezado" class="material">
 			<div class="horizontal">
-				<div class="boton svg abrir" onclick="solicitar_archivo()"></div>
-				<div class="boton svg pantalla" onclick="p_completa()"></div>
-				<div class="boton svg tts" onclick="iniciar_tts()"></div>
-				<div class="boton svg menu" onclick="ajustes_tts()"></div>
+<!--			<button onclick="agregar_datos()">Agregar</button>
+				<button onclick="leer_datos()">Leer</button>
+				<button onclick="actualizar_datos()">Act</button>
+				<button onclick="borrar_datos()">Act</button>-->				
+				<div id="boton_abrir" class="boton svg abrir" onclick="solicitar_archivo()"></div>
+				<div id="boton_pantalla" class="boton svg pantalla" onclick="p_completa()"></div>
+				<div id="boton_tts" class="boton svg tts" onclick="iniciar_tts()"></div>
+				<div id="boton_menu" class="boton svg menu" onclick="ajustes_tts()"></div>
 			</div>
 			<div id="botones_paginas" class="horizontal desactivado">
 				<div class="boton svg izq" onclick="manejo_pagina('-')"></div>
 				<div class="boton svg der" onclick="manejo_pagina('+')"></div>
-				<div id="valor_pagina" class="mostrar">0</div>
 				<input id="rango_paginas" class="rango_pagina" type="range" min="0" value="0" step="1" onchange="cambiar_pagina()"></input>
+				<output id="valor_pagina" class="mostrar">0</output>
 			</div>
 		</header>
 		<div id="progreso" class="no_clic material">

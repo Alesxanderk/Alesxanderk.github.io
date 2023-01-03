@@ -1,4 +1,5 @@
 window.onbeforeunload=detener_tts;
+document.onfullscreenchange=pantalla_salida;
 
 /* Carga de archivo */
 
@@ -20,6 +21,7 @@ let elem_valor_tam_fuente;
 let elem_valor_inter;
 let elem_valor_paginas;
 let elem_rango_paginas;
+let elem_rango_burbuja;
 let elem_valor_progeso;
 let elem_botones_paginas;
 
@@ -57,6 +59,91 @@ let db=window.localStorage;
 let pagina_cargada=null;
 let nombre_archivo='';
 
+/* JsStore */
+
+/*let connection=new JsStore.Connection();
+
+async function iniciar_index_db(){
+	var dbName ='JsStore_Demo';
+	var tblProduct = {
+		name: 'Product',
+		columns: {
+			// Here "Id" is name of column 
+			id:{ primaryKey: true, autoIncrement: true },
+			itemName:  { notNull: true, dataType: "string" },
+			price:  { notNull: true, dataType: "number" },
+			quantity : { notNull: true, dataType: "number" }
+		}
+	};
+	var database = {
+		name: dbName,
+		tables: [tblProduct]
+	}
+	
+	const isDbCreated = await connection.initDb(database);
+	if(isDbCreated === true){
+		console.log("db created");
+		// here you can prefill database with some data
+	}
+	else {
+		console.log("db opened");
+	}  
+};
+
+async function agregar_datos(){
+	var value = {
+		itemName: 'Blue Jeans',
+		price: 2000,
+		quantity: 1000
+	};
+	var insertCount = await connection.insert({
+		into: 'Product',
+		values: [value]
+	});
+
+	console.log(`${insertCount} rows inserted`);
+};
+
+async function leer_datos(){
+	// results will be array of objects
+	var results = await connection.select({
+		from: 'Product',
+		where: {
+			id: 5
+		}
+	});
+	alert(results.length + 'record found');
+};
+
+async function actualizar_datos(){
+	var rowsUpdated = await connection.update({ 
+		in: 'Product',
+		where: {
+			itemName: {
+				like: '%black%'
+			}
+		},
+		set: {
+			quantity: 2000
+		}
+	});
+	alert(rowsUpdated + ' rows updated');
+};
+
+async function borrar_datos(){
+	var rowsDeleted = await connection.remove({
+		from: 'Product',
+		where: {
+			id: 10
+		}
+	});
+	alert(rowsDeleted + ' record deleted');
+};*/
+
+/* Controles menu */
+
+let libro_abierto=false;
+
 /* Funciones */
 
 function cargar(){
@@ -64,6 +151,8 @@ function cargar(){
 	comprobar_tts();
 	listado_voces();
 	preparar_utterance();
+	
+	//iniciar_index_db();
 };
 
 /* Carga de elementos */
@@ -83,6 +172,7 @@ function buscar_elementos(){
 	elem_rate=document.getElementById('rate');
 	elem_estilos_extra=document.getElementById('externo');
 	elem_botones_paginas=document.getElementById('botones_paginas');
+	elem_rango_paginas.addEventListener('input',tooltip_range);
 };
 
 /* Manejo db */
@@ -92,19 +182,17 @@ function comprobar_base(){
 	let libro=db.getItem(nombre_archivo);
 	if(libro!==null){
 		libro=parseInt(libro,10);
-		if(confirm("¿Abrir la sección "+(libro+1)+"?")){
-			pagina_cargada=libro;
-		}else{/*Abrir en 0*/};
+		if(confirm("¿Abrir la sección "+(libro+1)+"?")){pagina_cargada=libro;};
 	}else{db.setItem(nombre_archivo,'0');};
 };
 
-function actualizar_base(){
-	db.setItem(nombre_archivo,indice_paginas);
-};
+function actualizar_base(){db.setItem(nombre_archivo,indice_paginas);};
 
 /* Manejo del EPUB */
 
-function solicitar_archivo(){elem_archivo.click();};
+function solicitar_archivo(){
+	if(!libro_abierto){elem_archivo.click();};
+};
 
 function cargar_epub(){
 	archivo=elem_archivo.files[0];
@@ -117,25 +205,19 @@ function cargar_epub(){
 
 function procesar_epub(){
 	zip.loadAsync(lector.result,{createFolders:true})
-	.then(function (zip){
-		buscar_mime();
-	});
+	.then(function (zip){buscar_mime();});
 };
 
 function buscar_mime(){
 	zip.file('mimetype').async('string')
 	.then(function (mimetype){
-		if(mimetype==='application/epub+zip'){
-			buscar_container();
-		};
+		if(mimetype==='application/epub+zip'){buscar_container();};
 	});
 };
 
 function buscar_container(){
 	zip.file('META-INF/container.xml').async('string')
-	.then(function (file){
-		buscar_opf(file);
-	});
+	.then(function (file){buscar_opf(file);});
 };
 
 function buscar_opf(file){
@@ -166,6 +248,9 @@ function procesar_opf(dir_raiz,dir_opf){
 	indice_imagenes=0;
 	zip.file(dir_opf).async('string')
 	.then(function (file){
+	
+		cambiar_abrir();
+	
 		file=parser.parseFromString(file,'application/xml');
 		let lista_elem=file.getElementsByTagName('item');
 		let tam_lista_elem=lista_elem.length;
@@ -192,7 +277,6 @@ function procesar_opf(dir_raiz,dir_opf){
 				case 'text/css':
 					dir_estilos_extra.push(dir_raiz+lista_elem[i]['attributes']['href'].nodeValue);
 				break;
-				/*default:console.log(tipo_arc);break;*/
 			};
 		};
 		let lista_ncx=file.getElementsByTagName('itemref');
@@ -203,7 +287,7 @@ function procesar_opf(dir_raiz,dir_opf){
 			dir_paginas.push(dir_raiz+temp_elem['attributes']['href'].nodeValue);
 		};
 		elem_rango_paginas.setAttribute('max',dir_paginas.length-1);
-		actualizar_paginas();
+		tooltip_range();
 		cargar_imagenes();
 		activar_botones();
 	});
@@ -235,9 +319,7 @@ function cargar_estilos(){
 			if(indice_estilos<(dir_estilos_extra.length-1)){
 				indice_estilos+=1;
 				cargar_estilos();
-			}else{
-				cargar_pagina();
-			};
+			}else{cargar_pagina();};
 		});
 	};
 };
@@ -248,7 +330,7 @@ function cargar_pagina(){
 	if(pagina_cargada!==null){
 		indice_paginas=pagina_cargada;
 		elem_rango_paginas.value=indice_paginas;
-		actualizar_paginas();
+		tooltip_range();
 		pagina_cargada=null;
 	};
 	zip.file(dir_paginas[indice_paginas]).async('string')
@@ -261,6 +343,9 @@ function cargar_pagina(){
 		};
 		file=parser.parseFromString(file,'text/html');
 		elem_contenido.innerHTML=file.body.innerHTML;
+		
+		libro_abierto=true;
+		
 		let lista_nodos=elem_contenido.children;
 		max_parrafos=lista_nodos.length;
 		for(let i=0;i<max_parrafos;i++){
@@ -289,9 +374,10 @@ function retroceder_pagina(){
 	if((indice_paginas-1)>-1){
 		indice_paginas-=1;
 		actualizar_base();
-		actulizar_elem_paginas();
-		actualizar_paginas();
+		actualizar_elem_paginas();
+		tooltip_range();
 		detener_tts();
+		cambiar_tts_3();
 		cargar_pagina();
 	};
 };
@@ -300,25 +386,22 @@ function avanzar_pagina(){
 	if((indice_paginas+1)<dir_paginas.length){
 		indice_paginas+=1;
 		actualizar_base();
-		actulizar_elem_paginas();
-		actualizar_paginas();
+		actualizar_elem_paginas();
+		tooltip_range();
 		detener_tts();
+		cambiar_tts_3();
 		cargar_pagina();
 	}else{console.log("Por alguna razon no avanza: " + indice_paginas + "][" + dir_paginas.length);};
 };
 
 function cambiar_pagina(){
 	indice_paginas=parseInt(elem_rango_paginas.value,10);
-	actualizar_paginas();
 	detener_tts();
+	cambiar_tts_3();
 	cargar_pagina();	
 };
 
-function actualizar_paginas(){
-	elem_valor_paginas.textContent=(indice_paginas+1)+' / '+dir_paginas.length;
-};
-
-function actulizar_elem_paginas(){
+function actualizar_elem_paginas(){
 	elem_rango_paginas.value=indice_paginas;
 };
 
@@ -345,13 +428,9 @@ window.onclick=function(event){
 	};
 };
 
-function habilitar_scroll(){
-	elem_visor.style='overflow:scroll';
-};
+function habilitar_scroll(){elem_visor.style='overflow:scroll';};
 
-function ocultar_scroll(){
-	elem_visor.style='overflow:hidden';
-};
+function ocultar_scroll(){elem_visor.style='overflow:hidden';};
 
 function maximo_scroll(){
 	habilitar_scroll();
@@ -372,14 +451,23 @@ function progreso(){
 
 /* Manejo de la pantalla completa */
 
-function p_completa(){	
-	if(document.documentElement.requestFullscreen){
-		document.documentElement.requestFullscreen();
-	}else if(document.documentElement.webkitRequestFullscreen){
-		document.documentElement.webkitRequestFullscreen();
-	}else if(document.documentElement.msRequestFullscreen){
-		document.documentElement.msRequestFullscreen();
+function p_completa(){
+	if(document.fullscreenElement===null){
+		if(document.documentElement.requestFullscreen){
+			document.documentElement.requestFullscreen();
+			cambiar_pantalla();
+		}else if(document.documentElement.webkitRequestFullscreen){
+			document.documentElement.webkitRequestFullscreen();
+			cambiar_pantalla();
+		}else if(document.documentElement.msRequestFullscreen){
+			document.documentElement.msRequestFullscreen();
+			cambiar_pantalla();
+		};
 	};
+};
+
+function pantalla_salida(){
+	if(document.fullscreenElement===null){cambiar_pantalla();};
 };
 
 /* Manejo del TTS */
@@ -404,9 +492,7 @@ function utterance_terminar(){
 	};
 };
 
-function utterance_error(){
-	console.error('Ocurrio un error');
-};
+function utterance_error(){console.error('Ocurrio un error');};
 
 function listado_voces(){
 	voces=tts.getVoices().sort(function (a,b){
@@ -430,8 +516,8 @@ function listado_voces(){
 };
 
 function iniciar_tts(){
-	if(tts.speaking){detener_tts();}
-	else{cancelado=false;leer();};
+	if(tts.speaking){detener_tts();cambiar_tts();}
+	else{cancelado=false;leer();cambiar_tts();};
 };
 
 function leer(){
@@ -466,23 +552,24 @@ function detener_tts(){
 
 function entero(valor){return Math.floor(valor);};
 
-/* --- */
-
-function buscar_padre(){
-	let elem_hijo=event.target;
-	let salir=false;
-	while(!salir){
-		let elem_padre=elem_hijo.parentNode;
-		let valor=elem_padre.getAttribute('id');
-		if(valor==='contenido'){
-			let temp_id=elem_hijo.getAttribute('id');
-			indice_parrafo=parseInt(elem_hijo.getAttribute('data-id'),10);
-			cambiar_seleccionado(document.getElementById(temp_id));
-			detener_tts();
-			cancelado=false;
-			leer();
-			salir=true;
-		}else{elem_hijo=elem_padre;};
+function buscar_padre(){	
+	if(libro_abierto){
+		let elem_hijo=event.target;
+		let salir=false;
+		while(!salir){
+			let elem_padre=elem_hijo.parentNode;
+			let valor=elem_padre.getAttribute('id');
+			if(valor==='contenido'){
+				let temp_id=elem_hijo.getAttribute('id');
+				indice_parrafo=parseInt(elem_hijo.getAttribute('data-id'),10);
+				cambiar_seleccionado(document.getElementById(temp_id));
+				detener_tts();
+				cancelado=false;
+				leer();
+				cambiar_tts_2()
+				salir=true;
+			}else{elem_hijo=elem_padre;};
+		};
 	};
 };
 
@@ -492,4 +579,56 @@ function cambiar_seleccionado(elem_nuevo){
 		lista_seleccionado[0].classList.toggle('selecionado');
 	};
 	elem_nuevo.classList.toggle('selecionado');
+};
+
+function cambiar_abrir(){
+	let temp_boton=document.getElementById('boton_abrir');
+	temp_boton.classList.toggle('abrir');
+	temp_boton.classList.toggle('abrir_2');
+};
+
+function cambiar_pantalla(){
+	let temp_pantalla=document.getElementById('boton_pantalla');
+	temp_pantalla.classList.toggle('pantalla');
+	temp_pantalla.classList.toggle('pantalla_2');
+};
+
+function cambiar_tts(){
+	let temp_tts=document.getElementById('boton_tts');
+	temp_tts.classList.toggle('tts');
+	temp_tts.classList.toggle('tts_2');
+};
+
+function cambiar_tts_2(){
+	let temp_tts=document.getElementById('boton_tts');
+	temp_tts.classList.remove("tts");
+	temp_tts.classList.add("tts_2");
+};
+
+function cambiar_tts_3(){
+	let temp_tts=document.getElementById('boton_tts');
+	temp_tts.classList.remove("tts_2");
+	temp_tts.classList.add("tts");
+};
+
+/* --- */
+
+window.onresize=recalcular_scroll;
+
+function recalcular_scroll(){
+	setTimeout(tercero,200);
+};
+
+function tercero(){
+	let scroll_temp=elem_visor.scrollTop;
+	elem_visor.scrollTop=10000000000000000;
+	max_scroll=elem_visor.scrollTop;
+	elem_visor.scrollTop=scroll_temp;
+};
+
+/* --- */
+
+function tooltip_range(){
+	let valor=parseInt(elem_rango_paginas.value);
+	elem_valor_paginas.innerHTML=(valor+1)+' / '+dir_paginas.length;
 };

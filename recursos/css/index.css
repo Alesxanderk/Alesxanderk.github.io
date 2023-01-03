@@ -1,12 +1,21 @@
 ::-webkit-Scrollbar{display:none;}
 
-.material{background-image:url(../images/material.png);}
-.pagina{background-image:url(../images/pagina.png);}
+.material{background-image:url(../png/material.png);}
+.pagina{background-image:url(../png/pagina.png);}
 .svg{background-repeat:no-repeat;background-size:24px 24px;min-width:24px;min-height:24px;background-position:center;}
+
 .abrir{background-image:url(../svg/abrir.svg);}
+.abrir_2{background-image:url(../svg/abrir_2.svg);}
+
 .pantalla{background-image:url(../svg/pantalla.svg);}
+.pantalla_2{background-image:url(../svg/pantalla_2.svg);}
+
 .tts{background-image:url(../svg/tts.svg);}
+.tts_2{background-image:url(../svg/tts_2.svg);}
+
 .menu{background-image:url(../svg/menu.svg);}
+
+
 .izq{background-image:url(../svg/izq.svg);}
 .der{background-image:url(../svg/der.svg);}
 
@@ -66,7 +75,10 @@ header{
 	padding-left:16px;
 	padding-right:16px;
 	padding-bottom:16px;
+	animation:all 0.8s;
 }
+
+/* --- */
 
 img{max-width:60%;}
 
@@ -84,7 +96,6 @@ img{max-width:60%;}
 
 .no_clic{pointer-events:none;}
 
-#modal_libreria{display:none;}
 #modal_tts_ajustes{display:none;}
 
 .fondo_modal{
@@ -119,4 +130,10 @@ img{max-width:60%;}
 
 .range_ancho{width:80%;}
 .rango_pagina{width:60%;}
-.selecionado{background-color:rgb(0,0,0,0.1);}
+
+.selecionado{
+	background-color:rgb(0,0,0,0.1);
+	transition:background-color 0.3s;
+}
+
+/* --- */
