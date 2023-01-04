@@ -39,23 +39,20 @@
 			<div id="contenido"></div>
 		</div>
 		<div id="modal_tts_ajustes" class="fondo_modal">
-			<div class="tarjeta_modal material">
-				<div class="horizontal">
-					<div>Rate</div>
-					<input class="range_ancho" type="range" min="0.5" max="2" value="1" step="0.1" id="rate">
-				</div>
-				<div class="horizontal">
-					<div>Pitch</div>
-					<input class="range_ancho" type="range" min="0" max="2" value="1" step="0.1" id="pitch">
-				</div>
-				<select id="listado_voces_tts"></select>
+			<div class="grid_modal material">
+				
+				<div class="etiqueta_rate centrar">Velocidad</div>
+				<input class="range_rate" type="range" min="0.5" max="2" value="1" step="0.1" id="rate">
+				
+				<div class="etiqueta_pitch centrar">Tono</div>
+				<input class="range_pitch" type="range" min="0" max="2" value="1" step="0.1" id="pitch">
+				
+				<select style="grid-column:1/4;grid-row:3;" id="listado_voces_tts"></select>
 			</div>
 		</div>
 		<div id="modal_libros" class="fondo_modal">
 			<div class="tarjeta_modal material">
-				<div id="listado_libros">
-					
-				</div>
+				<div id="listado_libros"></div>
 			</div>
 		</div>
 	</body>

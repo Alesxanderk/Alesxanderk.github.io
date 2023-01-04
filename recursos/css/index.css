@@ -1,7 +1,7 @@
 ::-webkit-Scrollbar{display:none;}
 
-.material{background-image:url(../png/material.png);}
-.pagina{background-image:url(../png/pagina.png);}
+.material{image-rendering: pixelated;background-image:url(../png/material.png);}
+.pagina{image-rendering: pixelated;background-image:url(../png/pagina.png);}
 .svg{background-repeat:no-repeat;background-size:24px 24px;min-width:24px;min-height:24px;background-position:center;}
 .libros{background-image:url(../svg/icon.svg);}
 .abrir{background-image:url(../svg/abrir.svg);}
@@ -13,7 +13,6 @@
 .menu{background-image:url(../svg/menu.svg);}
 .izq{background-image:url(../svg/izq.svg);}
 .der{background-image:url(../svg/der.svg);}
-
 .leido{background-image:url(../svg/leido.svg);}
 .no_leido{background-image:url(../svg/leido_2.svg);}
 .borrar{background-image:url(../svg/borrar.svg);}
@@ -121,6 +120,16 @@ img{max-width:60%;}
 	position:fixed;
 }
 
+.grid_modal{
+	color:white;
+	display:grid;
+	grid-template-columns:repeat(3,1fr);
+	grid-template-rows:repeat(3,1fr);
+	gap:16px;
+	padding:24px;
+	position:fixed;
+}
+
 .horizontal{
 	display:flex;
 	min-width:100%;
@@ -137,30 +146,31 @@ img{max-width:60%;}
 }
 
 #listado_libros{
-	display:grid;
-	grid-template-columns:repeat(4,1fr);
+	display:flex;
+	flex-direction:column;
 	gap:8px;
 }
 
-.titulo_listado,.texto_listado{
+.titulo_listado{font-weight:bold;}
+.texto_listado{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+.horizontal_listado{
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+    align-items:center;
+}
+
+.centrar{
 	display:flex;
 	justify-content:center;
 	align-items:center;
 }
 
-.titulo_listado{
-	font-weight:bold;
-}
-
-.grid_nombre{
-	grid-column:1;
-}
-.grid_pag{
-	grid-column:2;
-}
-.grid_leido{
-	grid-column:3;
-}
-.grid_borrar{
-	grid-column:4;
-}
+.etiqueta_rate{grid-column:1;grid-row:1;}
+.etiqueta_pitch{grid-column:1;grid-row:2;}
+.range_rate{grid-column:2/4;grid-row:1;}
+.range_pitch{grid-column:2/4;grid-row:2;}

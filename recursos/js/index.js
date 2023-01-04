@@ -632,16 +632,13 @@ function entero(valor){return Math.floor(valor);};
 
 function obtener_registro_libros(){
 	let cant_libros=db.length;
-	let msg='';
-	msg+='<div class="titulo_listado grid_nombre">Nombres</div>';
-	msg+='<div class="titulo_listado grid_pag">Páginas</div>';
-	msg+='<div class="titulo_listado grid_leido">Leido</div>';
-	msg+='<div class="titulo_listado grid_borrar">Borrar</div>';
+	let msg='';	
 	for(let i=0;i<cant_libros;i++){
 		let nombre_libro=db.key(i);
 		let datos_libro=db.getItem(nombre_libro);
 		datos_libro=datos_libro.split('@');
-		msg+='<div class="texto_listado">'+nombre_libro+'</div>';
+		msg+='<fieldset class="horizontal_listado">';
+		msg+='<legend class="titulo_listado">'+nombre_libro+'</legend>';
 		msg+='<div class="texto_listado">'+(parseInt(datos_libro[0])+1)+' / '+datos_libro[1]+'</div>';
 		if(datos_libro[2]==='0'){
 			msg+='<div class="boton svg leido" onclick="marcar_leido_libro('+i+')"></div>';
@@ -651,6 +648,7 @@ function obtener_registro_libros(){
 			msg+='<div class="boton svg">Error</div>';
 		};
 		msg+='<div class="boton svg borrar" onclick="borrar_entrada_libro('+i+')"></div>';
+		msg+='</fieldset>';
 	};
 	elem_listado_libros.innerHTML=msg;
 };
