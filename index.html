@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 	<head>
+		<link rel="icon" href="./recursos/svg/icon.svg" sizes="any" type="image/svg+xml">
 		<title>EPUB</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8">
@@ -17,15 +18,16 @@
 <!--			<button onclick="agregar_datos()">Agregar</button>
 				<button onclick="leer_datos()">Leer</button>
 				<button onclick="actualizar_datos()">Act</button>
-				<button onclick="borrar_datos()">Act</button>-->				
+				<button onclick="borrar_datos()">Act</button>-->
+				<div id="boton_libros" class="boton svg libros" onclick="libros()"></div>
 				<div id="boton_abrir" class="boton svg abrir" onclick="solicitar_archivo()"></div>
 				<div id="boton_pantalla" class="boton svg pantalla" onclick="p_completa()"></div>
 				<div id="boton_tts" class="boton svg tts" onclick="iniciar_tts()"></div>
 				<div id="boton_menu" class="boton svg menu" onclick="ajustes_tts()"></div>
 			</div>
 			<div id="botones_paginas" class="horizontal desactivado">
-				<div class="boton svg izq" onclick="manejo_pagina('-')"></div>
-				<div class="boton svg der" onclick="manejo_pagina('+')"></div>
+				<div class="boton svg izq" onclick="retroceder_pagina()"></div>
+				<div class="boton svg der" onclick="avanzar_pagina()"></div>
 				<input id="rango_paginas" class="rango_pagina" type="range" min="0" value="0" step="1" onchange="cambiar_pagina()"></input>
 				<output id="valor_pagina" class="mostrar">0</output>
 			</div>
@@ -47,6 +49,13 @@
 					<input class="range_ancho" type="range" min="0" max="2" value="1" step="0.1" id="pitch">
 				</div>
 				<select id="listado_voces_tts"></select>
+			</div>
+		</div>
+		<div id="modal_libros" class="fondo_modal">
+			<div class="tarjeta_modal material">
+				<div id="listado_libros">
+					
+				</div>
 			</div>
 		</div>
 	</body>

@@ -3,21 +3,20 @@
 .material{background-image:url(../png/material.png);}
 .pagina{background-image:url(../png/pagina.png);}
 .svg{background-repeat:no-repeat;background-size:24px 24px;min-width:24px;min-height:24px;background-position:center;}
-
+.libros{background-image:url(../svg/icon.svg);}
 .abrir{background-image:url(../svg/abrir.svg);}
 .abrir_2{background-image:url(../svg/abrir_2.svg);}
-
 .pantalla{background-image:url(../svg/pantalla.svg);}
 .pantalla_2{background-image:url(../svg/pantalla_2.svg);}
-
 .tts{background-image:url(../svg/tts.svg);}
 .tts_2{background-image:url(../svg/tts_2.svg);}
-
 .menu{background-image:url(../svg/menu.svg);}
-
-
 .izq{background-image:url(../svg/izq.svg);}
 .der{background-image:url(../svg/der.svg);}
+
+.leido{background-image:url(../svg/leido.svg);}
+.no_leido{background-image:url(../svg/leido_2.svg);}
+.borrar{background-image:url(../svg/borrar.svg);}
 
 html,body{
 	display:flex;
@@ -97,6 +96,7 @@ img{max-width:60%;}
 .no_clic{pointer-events:none;}
 
 #modal_tts_ajustes{display:none;}
+#modal_libros{display:none;}
 
 .fondo_modal{
 	background-color:rgba(0,0,0,0.5);
@@ -136,4 +136,31 @@ img{max-width:60%;}
 	transition:background-color 0.3s;
 }
 
-/* --- */
+#listado_libros{
+	display:grid;
+	grid-template-columns:repeat(4,1fr);
+	gap:8px;
+}
+
+.titulo_listado,.texto_listado{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.titulo_listado{
+	font-weight:bold;
+}
+
+.grid_nombre{
+	grid-column:1;
+}
+.grid_pag{
+	grid-column:2;
+}
+.grid_leido{
+	grid-column:3;
+}
+.grid_borrar{
+	grid-column:4;
+}
