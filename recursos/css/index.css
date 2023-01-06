@@ -35,7 +35,7 @@ html,body{
 
 body{
 	display:grid;
-	grid-template-columns:repeat(8,1fr) 42px 42px;
+	grid-template-columns:repeat(3,1fr) 42px 42px 42px 42px 42px 42px 42px;
 	grid-template-rows:repeat(9,1fr) 42px;
 }
 
