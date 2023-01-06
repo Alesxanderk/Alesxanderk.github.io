@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 	<head>
-		<link rel="icon" href="./recursos/svg/icon.svg" sizes="any" type="image/svg+xml">
+		<link rel="icon" href="./icon.svg" sizes="any" type="image/svg+xml">
 		<title>EPUB</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8">
@@ -42,7 +42,12 @@
 			<input id="rango_paginas" type="range" min="0" value="0" step="1" onchange="cambiar_pagina()"></input>
 		</div>
 		<output id="valor_paginas">0 / 0</output>
-		<div id="visor" onclick="buscar_padre()">
+		<div id="barra_progreso">
+			<div id="fondo_barra">
+				<div id="valor_barra"></div>
+			</div>
+		</div>
+		<div id="visor" onscroll="progreso_lectura()" onclick="buscar_padre()">
 			<div id="contenido"></div>
 		</div>
 		<div id="modal_tts_ajustes" class="fondo_modal">

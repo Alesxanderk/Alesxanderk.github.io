@@ -23,6 +23,7 @@ let tts_2;
 let contenedor_rango;
 let rango_paginas;
 let valor_paginas;
+let valor_barra;
 let visor;
 let contenido;
 let modal_tts_ajustes;
@@ -92,6 +93,7 @@ function buscar_elementos(){
 	contenedor_rango=document.getElementById('contenedor_rango');
 	rango_paginas=document.getElementById('rango_paginas');
 	valor_paginas=document.getElementById('valor_paginas');
+	valor_barra=document.getElementById('valor_barra');
 	visor=document.getElementById('visor');
 	contenido=document.getElementById('contenido');
 	modal_tts_ajustes=document.getElementById('modal_tts_ajustes');
@@ -588,9 +590,7 @@ function marcar_leido_libro(no_libro){
 		if(datos_temp[2]==='0'){datos_temp[2]='1';}
 		else if(datos_temp[2]==='1'){datos_temp[2]='0';}
 		else{console.error('El string no tiene el formato correcto')};
-		
 		db.setItem(libro_temp,datos_temp[0]+'@'+datos_temp[1]+'@'+datos_temp[2]);
-		
 		/* cambiar para solo afectar la indicada */
 		obtener_registro_libros();
 	}else{console.error('No existe la entrada');};
@@ -613,4 +613,20 @@ function color_fondo(){
 	document.body.className='tema_'+color_tema;
 	contenido_tts_ajustes.className='grid_modal tema_'+color_tema;
 	contenido_libros.className='tarjeta_modal tema_'+color_tema;
+};
+
+/* --- */
+function progreso_lectura(){
+	let i=(1/max_scroll)*visor.scrollTop;
+	let porcentaje=i*100;
+	valor_barra.style='min-height:'+porcentaje+'%;max-height:'+porcentaje+'%';
+};
+
+window.onresize=calcular_scroll;
+
+function calcular_scroll(){
+	let i=(1/max_scroll)*visor.scrollTop;
+	visor.scrollTop=10000000000000000;
+	max_scroll=visor.scrollTop;
+	visor.scrollTop=(i/(1/max_scroll));
 };
