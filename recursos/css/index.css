@@ -21,6 +21,8 @@
 .menu{background-image:url(../svg/menu.svg);}
 .tts_1{background-image:url(../svg/tts_1.svg);}
 .tts_2{background-image:url(../svg/tts_2.svg);}
+.pantalla_1{background-image:url(../svg/pantalla_1.svg);}
+.pantalla_2{background-image:url(../svg/pantalla_2.svg);}
 
 /* --- */
 html,body{
@@ -40,21 +42,20 @@ html,body{
 body{
 	display:grid;
 	grid-template-columns:repeat(9,1fr) 42px;
-	grid-template-rows:42px 42px 42px 42px 42px 42px 42px 42px 42px repeat(1,1fr);
+	grid-template-rows:42px 42px 42px 42px 42px 42px 42px 42px 42px 42px repeat(1,1fr);
 }
 
 /* --- */
 .boton_efecto{transition:box-shadow 0.8s;}
 .boton_efecto:hover{box-shadow:inset 0px 0px 20px 0px grey;}
 
-#boton_abrir{grid-column:10;grid-row:5;}
 #boton_libros{grid-column:10;grid-row:4;}
-#boton_color{grid-column:9;grid-row:10;}
-#boton_pantalla{grid-column:10;grid-row:10;}
+#boton_abrir{grid-column:10;grid-row:5;}
 #boton_izq{grid-column:10;grid-row:6;}
 #boton_der{grid-column:10;grid-row:7;}
 #boton_tts{grid-column:10;grid-row:8;}
 #boton_menu{grid-column:10;grid-row:9;}
+#boton_pantalla{grid-column:10;grid-row:10;}
 
 #contenedor_rango{
 	display:flex;
@@ -109,7 +110,7 @@ body{
 /* --- */
 #visor{
 	grid-column:1/10;
-	grid-row:2/11;
+	grid-row:2/12;
 	padding:16px;
 	box-shadow:inset 0px 0px 5px 0px;
 }

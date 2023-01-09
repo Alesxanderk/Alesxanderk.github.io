@@ -29,7 +29,6 @@ let contenido_tts_ajustes;
 let listado_voces_tts;
 let modal_libros;
 let listado_libros;
-let contenido_libros;
 
 /* JSZip */
 let zip=new JSZip();
@@ -102,7 +101,6 @@ function buscar_elementos(){
 	
 	modal_libros=document.getElementById('modal_libros');
 	listado_libros=document.getElementById('listado_libros');
-	contenido_libros=document.getElementById('contenido_libros');
 	
 	rango_paginas.addEventListener('input',visor_del_valor_paginas);
 };
@@ -218,7 +216,7 @@ function procesar_opf(dir_raiz,dir_opf){
 		};
 		rango_paginas.setAttribute('max',dir_paginas.length-1);
 		actualizar_registro_libro();
-		tooltip_range();
+		visor_del_valor_paginas();
 		cargar_imagenes();
 		activar_botones();
 	});
@@ -262,7 +260,7 @@ function cargar_pagina(){
 		indice_paginas=pagina_cargada;
 		rango_paginas.value=indice_paginas;
 		indice_parrafo=parrafo_cargado;
-		tooltip_range();
+		visor_del_valor_paginas();
 		pagina_cargada=null;
 		parrafo_cargado=null;
 	};
@@ -306,7 +304,7 @@ function retroceder_pagina(){
 		indice_paginas-=1;
 		actualizar_registro_libro();
 		actualizar_elem_paginas();
-		tooltip_range();
+		visor_del_valor_paginas();
 		detener_tts();
 		cambiar_tts_3();
 		cargar_pagina();
@@ -318,7 +316,7 @@ function avanzar_pagina(){
 		indice_paginas+=1;
 		actualizar_registro_libro();
 		actualizar_elem_paginas();
-		tooltip_range();
+		visor_del_valor_paginas();
 		detener_tts();
 		cambiar_tts_3();
 		cargar_pagina();
