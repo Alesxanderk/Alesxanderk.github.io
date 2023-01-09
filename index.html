@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 	<head>
-		<link rel="icon" href="./icon.svg" sizes="any" type="image/svg+xml">
+		<link rel="icon" href="./recursos/svg/icon.svg" sizes="any" type="image/svg+xml">
 		<title>EPUB</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8">
@@ -10,59 +10,65 @@
 		<script src="./recursos/js/jszip.js"></script>
 		<script src="./recursos/js/index.js"></script>
 	</head>
-	<body onload="cargar()" class="tema_1">
-		<div id="boton_abrir" class="centrar boton_efecto" onclick="solicitar_archivo()">
-			<svg id="abrir_1" class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M10,4H4C2.89,4 2,4.89 2,6V18C2,19.1 2.9,20 4,20H20C21.1,20 22,19.1 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" /></svg>
-			<svg id="abrir_2" class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19C20.1,6 21,6.9 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z" /></svg>
-		</div>
+	<body onload="cargar()" class="tema">
+		
+		<!-- Botones -->
 		<div id="boton_libros" class="centrar boton_efecto" onclick="libros()">
-			<svg class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M17.5,14.33C18.29,14.33 19.13,14.41 20,14.57V16.07C19.38,15.91 18.54,15.83 17.5,15.83C15.6,15.83 14.11,16.16 13,16.82V15.13C14.17,14.6 15.67,14.33 17.5,14.33M13,12.46C14.29,11.93 15.79,11.67 17.5,11.67C18.29,11.67 19.13,11.74 20,11.9V13.4C19.38,13.24 18.54,13.16 17.5,13.16C15.6,13.16 14.11,13.5 13,14.15M17.5,10.5C15.6,10.5 14.11,10.82 13,11.5V9.84C14.23,9.28 15.73,9 17.5,9C18.29,9 19.13,9.08 20,9.23V10.78C19.26,10.59 18.41,10.5 17.5,10.5M21,18.5V7C19.96,6.67 18.79,6.5 17.5,6.5C15.45,6.5 13.62,7 12,8V19.5C13.62,18.5 15.45,18 17.5,18C18.69,18 19.86,18.16 21,18.5M17.5,4.5C19.85,4.5 21.69,5 23,6V20.56C23,20.68 22.95,20.8 22.84,20.91C22.73,21 22.61,21.08 22.5,21.08C22.39,21.08 22.31,21.06 22.25,21.03C20.97,20.34 19.38,20 17.5,20C15.45,20 13.62,20.5 12,21.5C10.66,20.5 8.83,20 6.5,20C4.84,20 3.25,20.36 1.75,21.07C1.72,21.08 1.68,21.08 1.63,21.1C1.59,21.11 1.55,21.12 1.5,21.12C1.39,21.12 1.27,21.08 1.16,21C1.05,20.89 1,20.78 1,20.65V6C2.34,5 4.18,4.5 6.5,4.5C8.83,4.5 10.66,5 12,6C13.34,5 15.17,4.5 17.5,4.5Z" /></svg>
+			<div class="svg_boton icon"></div>
 		</div>
-		<div id="boton_color" class="centrar boton_efecto" onclick="color_fondo()">
-			<svg class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M7.5,2C5.71,3.15 4.5,5.18 4.5,7.5C4.5,9.82 5.71,11.85 7.53,13C4.46,13 2,10.54 2,7.5C2,4.46 4.46,2 7.5,2M19.07,3.5L20.5,4.93L4.93,20.5L3.5,19.07L19.07,3.5M12.89,5.93L11.41,5L9.97,6L10.39,4.3L9,3.24L10.75,3.12L11.33,1.47L12,3.1L13.73,3.13L12.38,4.26L12.89,5.93M9.59,9.54L8.43,8.81L7.31,9.59L7.65,8.27L6.56,7.44L7.92,7.35L8.37,6.06L8.88,7.33L10.24,7.36L9.19,8.23L9.59,9.54M19,13.5C19,16.54 16.54,19 13.5,19C12.28,19 11.15,18.6 10.24,17.93L17.93,10.24C18.6,11.15 19,12.28 19,13.5M14.6,20.08L17.37,18.93L17.13,22.28L14.6,20.08M18.93,17.38L20.08,14.61L22.28,17.15L18.93,17.38M20.08,12.42L18.94,9.64L22.28,9.88L20.08,12.42M9.63,18.93L12.4,20.08L9.87,22.27L9.63,18.93Z" /></svg>
-		</div>
-		<div id="boton_pantalla" class="centrar boton_efecto" onclick="p_completa()">
-			<svg id="pantalla_1" class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z" /></svg>
-			<svg id="pantalla_2" class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M14,14H19V16H16V19H14V14M5,14H10V19H8V16H5V14M8,5H10V10H5V8H8V5M19,8V10H14V5H16V8H19Z" /></svg>
+		<div id="boton_abrir" class="centrar boton_efecto" onclick="solicitar_archivo()">
+			<div id="abrir_1" class="svg_boton abrir_1"></div>
+			<div id="abrir_2" class="svg_boton abrir_2"></div>
 		</div>
 		<div id="boton_izq" class="centrar boton_efecto desactivado" onclick="retroceder_pagina()">
-			<svg class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" /></svg>
+			<div class="svg_boton izq"></div>
 		</div>
 		<div id="boton_der" class="centrar boton_efecto desactivado" onclick="avanzar_pagina()">
-			<svg class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+			<div class="svg_boton der"></div>
 		</div>
 		<div id="boton_tts" class="centrar boton_efecto desactivado" onclick="iniciar_tts()">
-			<svg id="tts_1" class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M8,7C9.1,7 10,7.9 10,9V14C10,15.1 9.1,16 8,16C6.9,16 6,15.1 6,14V9C6,7.9 6.9,7 8,7M14,14C14,16.97 11.84,19.44 9,19.92V22H7V19.92C4.16,19.44 2,16.97 2,14H4C4,16.21 5.79,18 8,18C10.21,18 12,16.21 12,14H14M21.41,9.41L17.17,13.66L18.18,10H14C12.9,10 12,9.1 12,8V4C12,2.9 12.9,2 14,2H20C21.1,2 22,2.9 22,4V8C22,8.55 21.78,9.05 21.41,9.41Z" /></svg>
-			<svg id="tts_2" class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M2,5.27L3.28,4L20,20.72L18.73,22L13.38,16.65C12.55,18.35 10.93,19.59 9,19.92V22H7V19.92C4.16,19.44 2,16.97 2,14H4C4,16.21 5.79,18 8,18C9.82,18 11.36,16.78 11.84,15.11L10,13.27V14C10,15.1 9.1,16 8,16C6.9,16 6,15.1 6,14V9.27L2,5.27M21.41,9.41L17.17,13.66L18.18,10H14C12.9,10 12,9.1 12,8V4C12,2.9 12.9,2 14,2H20C21.1,2 22,2.9 22,4V8C22,8.55 21.78,9.05 21.41,9.41Z" /></svg>
+			<div id="tts_1" class="svg_boton tts_1"></div>
+			<div id="tts_2" class="svg_boton tts_2"></div>
 		</div>
 		<div id="boton_menu" class="centrar boton_efecto" onclick="ajustes_tts()">
-			<svg class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+			<div class="svg_boton menu"></div>
 		</div>
-		<div id="contenedor_rango" class="estilo_rango boton_efecto desactivado">
+		
+		<!-- Output Slider-->
+		<output id="valor_paginas">0 / 0</output>
+		
+		<!-- Slider -->
+		<div id="contenedor_rango" class="boton_efecto desactivado">
 			<input id="rango_paginas" type="range" min="0" value="0" step="1" onchange="cambiar_pagina()"></input>
 		</div>
-		<output id="valor_paginas">0 / 0</output>
+		
+		<!-- Barra de progreso de lectura -->
 		<div id="barra_progreso">
 			<div id="fondo_barra">
 				<div id="valor_barra"></div>
 			</div>
 		</div>
+		
+		<!-- Visor del texto -->
 		<div id="visor" onscroll="progreso_lectura()" onclick="buscar_padre()">
 			<div id="contenido"></div>
 		</div>
+		
+		<!-- Modales -->
+		
+		<!-- Ajustes TTS -->
 		<div id="modal_tts_ajustes" class="fondo_modal">
-			<div id="contenido_tts_ajustes" class="grid_modal tema_1">
-				<div class="etiqueta_rate centrar">Velocidad</div>
-				<input id="rate" class="range_rate" type="range" min="0.5" max="2" value="1" step="0.1">
-				<div class="etiqueta_pitch centrar">Tono</div>
-				<input id="pitch" class="range_pitch" type="range" min="0" max="2" value="1" step="0.1">
+			<div id="contenido_tts_ajustes" class="tarjeta_modal tema">
 				<select id="listado_voces_tts" class="listado_voces_tts"></select>
 			</div>
 		</div>
+		
+		<!-- Registro libros -->
 		<div id="modal_libros" class="fondo_modal">
-			<div id="contenido_libros" class="tarjeta_modal tema_1">
+			<div id="contenido_libros" class="tarjeta_modal tema">
 				<div id="listado_libros"></div>
 			</div>
 		</div>
+		
 	</body>
 </html>

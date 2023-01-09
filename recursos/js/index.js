@@ -9,12 +9,10 @@ elem_archivo.setAttribute('accept','.epub');
 let lector;
 let archivo;
 
-/* Elemntos */
+/* Elementos */
 let estilos_extra;
 let abrir_1;
 let abrir_2;
-let pantalla_1;
-let pantalla_2;
 let boton_izq;
 let boton_der;
 let boton_tts;
@@ -28,8 +26,6 @@ let visor;
 let contenido;
 let modal_tts_ajustes;
 let contenido_tts_ajustes;
-let rate;
-let pitch;
 let listado_voces_tts;
 let modal_libros;
 let listado_libros;
@@ -62,13 +58,11 @@ let cancelado=false;
 /* db */
 let db=window.localStorage;
 let pagina_cargada=null;
+let parrafo_cargado=null;
 let nombre_archivo='';
 
 /* Controles menu */
 let libro_abierto=false;
-
-/* Control color tema */
-let color_tema=1;
 
 /* Funciones */
 function cargar(){
@@ -81,30 +75,36 @@ function cargar(){
 /* Carga de elementos */
 function buscar_elementos(){
 	estilos_extra=document.getElementById('externo');
+	
 	abrir_1=document.getElementById('abrir_1');
 	abrir_2=document.getElementById('abrir_2');
-	pantalla_1=document.getElementById('pantalla_1');
-	pantalla_2=document.getElementById('pantalla_2');
+	
 	boton_izq=document.getElementById('boton_izq');
 	boton_der=document.getElementById('boton_der');
 	boton_tts=document.getElementById('boton_tts');
+	
 	tts_1=document.getElementById('tts_1');
 	tts_2=document.getElementById('tts_2');
+	
 	contenedor_rango=document.getElementById('contenedor_rango');
 	rango_paginas=document.getElementById('rango_paginas');
+	
 	valor_paginas=document.getElementById('valor_paginas');
+	
 	valor_barra=document.getElementById('valor_barra');
+	
 	visor=document.getElementById('visor');
 	contenido=document.getElementById('contenido');
+	
 	modal_tts_ajustes=document.getElementById('modal_tts_ajustes');
 	contenido_tts_ajustes=document.getElementById('contenido_tts_ajustes');
-	rate=document.getElementById('rate');
-	pitch=document.getElementById('pitch');
 	listado_voces_tts=document.getElementById('listado_voces_tts');
+	
 	modal_libros=document.getElementById('modal_libros');
 	listado_libros=document.getElementById('listado_libros');
 	contenido_libros=document.getElementById('contenido_libros');
-	rango_paginas.addEventListener('input',tooltip_range);
+	
+	rango_paginas.addEventListener('input',visor_del_valor_paginas);
 };
 
 /* Manejo db */
@@ -116,6 +116,7 @@ function comprobar_base(){
 		datos_libro[0]=parseInt(datos_libro[0],10);
 		if(confirm("¿Abrir la sección "+(datos_libro[0]+1)+"?")){
 			pagina_cargada=datos_libro[0];
+			parrafo_cargado=parseInt(datos_libro[2],10);
 		};
 	}else{db.setItem(nombre_archivo,'0@0@0');};
 };
@@ -216,12 +217,14 @@ function procesar_opf(dir_raiz,dir_opf){
 			dir_paginas.push(dir_raiz+temp_elem['attributes']['href'].nodeValue);
 		};
 		rango_paginas.setAttribute('max',dir_paginas.length-1);
-		actualizar_pagina_libro();
+		actualizar_registro_libro();
 		tooltip_range();
 		cargar_imagenes();
 		activar_botones();
 	});
 };
+
+function mostrar_error(){alert('Ha ocurrido un error al leer el archivo');};
 
 /* Manejo de Imanges */
 function cargar_imagenes(){
@@ -254,11 +257,14 @@ function cargar_estilos(){
 
 /* Manejo de Paginas */
 function cargar_pagina(){
+	indice_parrafo=0;
 	if(pagina_cargada!==null){
 		indice_paginas=pagina_cargada;
 		rango_paginas.value=indice_paginas;
+		indice_parrafo=parrafo_cargado;
 		tooltip_range();
 		pagina_cargada=null;
+		parrafo_cargado=null;
 	};
 	zip.file(dir_paginas[indice_paginas]).async('string')
 	.then(function (file){
@@ -277,11 +283,16 @@ function cargar_pagina(){
 			lista_nodos[i].setAttribute('id','id_'+i);
 			lista_nodos[i].setAttribute('data-id',''+i);
 		};
-		indice_parrafo=0;
+		if(indice_parrafo!==0){
+			let elem_temp=document.getElementById('id_'+indice_parrafo);
+			cambiar_seleccionado(elem_temp);
+		};
+		actualizar_registro_libro();
 		maximo_scroll();
 	});
 };
 
+/* Activar botones */
 function activar_botones(){
 	boton_izq.classList.remove('desactivado');
 	boton_der.classList.remove('desactivado');
@@ -289,10 +300,11 @@ function activar_botones(){
 	boton_tts.classList.remove('desactivado');
 };
 
+/* Movimiento entre las paginas */
 function retroceder_pagina(){
 	if((indice_paginas-1)>-1){
 		indice_paginas-=1;
-		actualizar_pagina_libro();
+		actualizar_registro_libro();
 		actualizar_elem_paginas();
 		tooltip_range();
 		detener_tts();
@@ -304,7 +316,7 @@ function retroceder_pagina(){
 function avanzar_pagina(){
 	if((indice_paginas+1)<dir_paginas.length){
 		indice_paginas+=1;
-		actualizar_pagina_libro();
+		actualizar_registro_libro();
 		actualizar_elem_paginas();
 		tooltip_range();
 		detener_tts();
@@ -313,24 +325,24 @@ function avanzar_pagina(){
 	}else{console.log("Por alguna razon no avanza: " + indice_paginas + "][" + dir_paginas.length);};
 };
 
+/* Movimiento entre paginas - range */
 function cambiar_pagina(){
 	indice_paginas=parseInt(rango_paginas.value,10);
-	actualizar_pagina_libro();
+	actualizar_registro_libro();
 	detener_tts();
 	cambiar_tts_3();
 	cargar_pagina();	
 };
 
+/* Actualizar los visores de la pagina actual */
 function actualizar_elem_paginas(){
 	rango_paginas.value=indice_paginas;
 };
 
-function tooltip_range(){
+function visor_del_valor_paginas(){
 	let valor=parseInt(rango_paginas.value);
 	valor_paginas.innerHTML=(valor+1)+' / '+dir_paginas.length;
 };
-
-function mostrar_error(){alert('Ha ocurrido un error al leer el archivo');};
 
 /* Manejo Modales */
 function libros(){
@@ -344,6 +356,7 @@ function ajustes_tts(){
 	modal_tts_ajustes.style.display='flex';
 };
 
+/* Salida de los modales */
 window.onclick=function(event){
 	switch(event.target){
 		case modal_libros:
@@ -415,6 +428,7 @@ function utterance_terminar(){
 	if(cancelado==false){
 		if((indice_parrafo+1)<max_parrafos){
 			indice_parrafo+=1;
+			actualizar_registro_libro();
 			leer();
 		};
 	};
@@ -465,8 +479,8 @@ function leer(){
 			};
 		};
 		utterance.text=texto;
-		utterance.pitch=pitch.value;
-		utterance.rate=rate.value;
+		utterance.pitch=1;
+		utterance.rate=1.7;
 		tts.speak(utterance);
 	};
 };
@@ -487,6 +501,7 @@ function buscar_padre(){
 			if(valor==='contenido'){
 				let temp_id=elem_hijo.getAttribute('id');
 				indice_parrafo=parseInt(elem_hijo.getAttribute('data-id'),10);
+				actualizar_registro_libro();
 				cambiar_seleccionado(document.getElementById(temp_id));
 				detener_tts();
 				cancelado=false;
@@ -539,9 +554,6 @@ function cambiar_tts_3(){
 	tts_1.style='display:flex';
 };
 
-/* Funciones auxilires */
-function entero(valor){return Math.floor(valor);};
-
 /* Manejo Modal Libros */
 function obtener_registro_libros(){
 	let cant_libros=db.length;
@@ -551,46 +563,26 @@ function obtener_registro_libros(){
 		let datos_libro=db.getItem(nombre_libro);
 		datos_libro=datos_libro.split('@');
 		msg+='<fieldset class="horizontal_listado">';
-		msg+='<legend class="titulo_listado">'+nombre_libro+'</legend>';
-		msg+='<div class="texto_listado">'+(parseInt(datos_libro[0])+1)+' / '+datos_libro[1]+'</div>';
-		if(datos_libro[2]==='0'){
-			msg+='<div class="centrar boton_efecto" onclick="marcar_leido_libro('+i+')">';
-			msg+='<svg class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M12,20C7.58,20 4,16.42 4,12C4,7.58 7.58,4 12,4C16.42,4 20,7.58 20,12C20,16.42 16.42,20 12,20M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2Z" /></svg>';
+			msg+='<legend class="titulo_listado">'+nombre_libro+'</legend>';
+			msg+='<div class="texto_listado">'+(parseInt(datos_libro[0])+1)+' / '+datos_libro[1]+'</div>';
+			msg+='<div class="texto_listado">'+datos_libro[2]+'</div>';
+			msg+='<div class="centrar boton_efecto" onclick="borrar_entrada_libro('+i+')">';
+				msg+='<div class="svg_boton borrar"></div>';
 			msg+='</div>';
-		}else if(datos_libro[2]==='1'){
-			msg+='<div class="centrar boton_efecto" onclick="marcar_leido_libro('+i+')">';
-			msg+='<svg class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M12,20C7.58,20 4,16.42 4,12C4,7.58 7.58,4 12,4C16.42,4 20,7.58 20,12C20,16.42 16.42,20 12,20M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M12,7C9.24,7 7,9.24 7,12C7,14.76 9.24,17 12,17C14.76,17 17,14.76 17,12C17,9.24 14.76,7 12,7Z" /></svg>';
-			msg+='</div>';
-		}else{msg+='<div class="centrar">Error</div>';};
-		msg+='<div class="centrar boton_efecto" onclick="borrar_entrada_libro('+i+')">';
-		msg+='<svg class="svg_boton" viewBox="0 0 24 24"><path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19C6,20.1 6.9,21 8,21H16C17.1,21 18,20.1 18,19V7H6V19Z" /></svg>';
-		msg+='</div>';
 		msg+='</fieldset>';
 	};
 	listado_libros.innerHTML=msg;
 };
 
-function actualizar_pagina_libro(){
+/* Guardaro del ultimo parrafo leido */
+function actualizar_registro_libro(){
 	let libro_temp=db.getItem(nombre_archivo);
 	if(libro_temp!==null){
 		libro_temp=libro_temp.split('@');
-		libro_temp[0]=indice_paginas;
+		libro_temp[0]=indice_paginas
 		libro_temp[1]=dir_paginas.length;
+		libro_temp[2]=indice_parrafo;
 		db.setItem(nombre_archivo,libro_temp[0]+'@'+libro_temp[1]+'@'+libro_temp[2]);
-		/* cambiar para solo afectar la indicada */
-		obtener_registro_libros();
-	}else{console.error('No existe la entrada');};
-};
-
-function marcar_leido_libro(no_libro){
-	let libro_temp=db.key(no_libro);
-	if(libro_temp!==null){
-		let datos_temp=db.getItem(libro_temp);
-		datos_temp=datos_temp.split('@');
-		if(datos_temp[2]==='0'){datos_temp[2]='1';}
-		else if(datos_temp[2]==='1'){datos_temp[2]='0';}
-		else{console.error('El string no tiene el formato correcto')};
-		db.setItem(libro_temp,datos_temp[0]+'@'+datos_temp[1]+'@'+datos_temp[2]);
 		/* cambiar para solo afectar la indicada */
 		obtener_registro_libros();
 	}else{console.error('No existe la entrada');};
@@ -606,16 +598,7 @@ function borrar_entrada_libro(no_libro){
 	}else{console.error('No existe la entrada');};
 };
 
-/* --- */
-function color_fondo(){
-	color_tema+=1;
-	if(color_tema>3){color_tema=1;};
-	document.body.className='tema_'+color_tema;
-	contenido_tts_ajustes.className='grid_modal tema_'+color_tema;
-	contenido_libros.className='tarjeta_modal tema_'+color_tema;
-};
-
-/* --- */
+/* Manejo progreso de lectura */
 function progreso_lectura(){
 	let i=(1/max_scroll)*visor.scrollTop;
 	let porcentaje=i*100;
@@ -630,3 +613,6 @@ function calcular_scroll(){
 	max_scroll=visor.scrollTop;
 	visor.scrollTop=(i/(1/max_scroll));
 };
+
+/* Funciones auxilires */
+function entero(valor){return Math.floor(valor);};

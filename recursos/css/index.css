@@ -1,22 +1,26 @@
 ::-webkit-Scrollbar{display:none;}
 
-.tema_1{
-	background-image:url(../png/fondo_1.png);
+.tema{
+	background-image:url(../png/fondo.png);
 	image-rendering:pixelated;
 	color:black;
 }
 
-.tema_2{
-	background-image:url(../png/fondo_2.png);
-	image-rendering:pixelated;
-	color:white;
+.svg_boton{
+	min-width:24px;
+    min-height:24px;
+	max-width:24px;
+    max-height:24px;
 }
-
-.tema_3{
-	background-image:url(../png/fondo_3.png);
-	image-rendering:pixelated;
-	color:black;
-}
+.icon{background-image:url(../svg/icon.svg);}
+.abrir_1{background-image:url(../svg/abrir_1.svg);}
+.abrir_2{background-image:url(../svg/abrir_2.svg);}
+.borrar{background-image:url(../svg/borrar.svg);}
+.der{background-image:url(../svg/der.svg);}
+.izq{background-image:url(../svg/izq.svg);}
+.menu{background-image:url(../svg/menu.svg);}
+.tts_1{background-image:url(../svg/tts_1.svg);}
+.tts_2{background-image:url(../svg/tts_2.svg);}
 
 /* --- */
 html,body{
@@ -35,15 +39,13 @@ html,body{
 
 body{
 	display:grid;
-	grid-template-columns:repeat(8,1fr) 42px 42px;
-	grid-template-rows:repeat(3,1fr) 42px 42px 42px 42px 42px 42px 42px;
+	grid-template-columns:repeat(9,1fr) 42px;
+	grid-template-rows:42px 42px 42px 42px 42px 42px 42px 42px 42px repeat(1,1fr);
 }
 
 /* --- */
 .boton_efecto{transition:box-shadow 0.8s;}
 .boton_efecto:hover{box-shadow:inset 0px 0px 20px 0px grey;}
-
-.svg_boton{width:24px;height:24px}
 
 #boton_abrir{grid-column:10;grid-row:5;}
 #boton_libros{grid-column:10;grid-row:4;}
@@ -54,7 +56,13 @@ body{
 #boton_tts{grid-column:10;grid-row:8;}
 #boton_menu{grid-column:10;grid-row:9;}
 
-.estilo_rango{grid-column:3/9;grid-row:10;display: flex;justify-content:center;align-items:center;}
+#contenedor_rango{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	grid-column:3/10;
+	grid-row:1;
+}
 
 #rango_paginas{width:80%;}
 
@@ -63,7 +71,7 @@ body{
 	justify-content:center;
 	align-items:center;
 	grid-column:1/3;
-	grid-row:10;
+	grid-row:1;
 }
 
 #barra_progreso{
@@ -101,7 +109,7 @@ body{
 /* --- */
 #visor{
 	grid-column:1/10;
-	grid-row:1/10;
+	grid-row:2/11;
 	padding:16px;
 	box-shadow:inset 0px 0px 5px 0px;
 }
@@ -140,18 +148,9 @@ img{max-width:60%;}
 .range_pitch{grid-column:2/4;grid-row:2;}
 .listado_voces_tts{grid-column:1/4;grid-row:3;}
 
-.grid_modal{
-	display:grid;
-	grid-template-columns:repeat(3,1fr);
-	grid-template-rows:repeat(3,1fr);
-	gap:16px;
-	padding:24px;
-	position:fixed;
-}
-
-/* --- */
 #modal_libros{display:none;}
 
+/* --- */
 #listado_libros{
 	display:flex;
 	flex-direction:column;
