@@ -7,18 +7,21 @@ html, body{
 	max-height:100%;
 	margin:0px;
 	padding:0px;
-	user-select: none;
+	user-select:none;
+	overflow:auto;
 }
-body{flex-direction:column;}
-
+body{
+	flex-direction:column;
+	overflow:auto;
+}
 .cabecera{
 	background-color:#2e3334;
 	display:flex;
 	flex-direction:row;
+	flex-wrap: wrap;
 	gap:8px;
 	padding:8px;
 }
-
 .select{
 	background-color:#2e3334;
 	color:#df9a73;
@@ -26,7 +29,6 @@ body{flex-direction:column;}
 	padding:8px;
 	flex:1;
 }
-
 .btn{
 	background-color:#2e3334;
 	color:#df9a73;
@@ -37,7 +39,6 @@ body{flex-direction:column;}
 	justify-content:center;
 	align-items:center;
 }
-
 .btn:hover{
 	background-color:#df9a73;
 	color:#2e3334;
@@ -48,23 +49,21 @@ body{flex-direction:column;}
 	color:#2e3334;
 	border:1px solid #976159;
 }
-
 .contenedor{
 	background-color:#ccba9b;
 	display:flex;
 	flex:1;
 	padding:24px;
 }
-
 .visor{
 	border:1px solid #df9a73;
 	display:flex;
 	flex-direction:column;
+	flex-wrap:wrap;
 	flex:1;
 	gap:8px;
 	padding:24px;
 }
-
 .parrafo{
     display:flex;
     flex-wrap:wrap;
@@ -72,12 +71,12 @@ body{flex-direction:column;}
 }
 .oracion{
 	display:flex;
+	flex-wrap:wrap;
     gap:4px;
 }
 .palabra{ display:flex; }
 .silaba{ display:flex; }
 .activo{ background-color: #976159; }
-
 svg{
 	width:24px;
 	height:24px;
