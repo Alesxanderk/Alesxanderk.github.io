@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Idioma</title>
+		<link rel="stylesheet" href="index.css">
+		<script src="silabas.js"></script>
+		<script src="index.js"></script>
+	</head>
+	<body>
+		<div id="cabecera" class="cabecera">
+			<select id="modo" class="select">
+				<option value="parrafo" selected>Parrafo</option>
+				<option value="oracion">Oracion</option>
+				<option value="palabra">Palabra</option>
+				<option value="silaba">Silaba</option>
+			</select>
+			<select id="velocidad" class="select">
+				<option value="0.25">0.25 x</option>
+				<option value="0.50">0.50 x</option>
+				<option value="0.75">0.75 x</option>
+				<option value="1.00" selected>1.00 x</option>
+				<option value="1.25">1.25 x</option>
+				<option value="1.50">1.50 x</option>
+				<option value="1.75">1.75 x</option>
+				<option value="2.00">2.00 x</option>
+			</select>
+			<select id="pausa" class="select">
+				<option value="200">0.20 seg</option>
+				<option value="300">0.30 seg</option>
+				<option value="500">0.50 seg</option>
+				<option value="1000" selected>1.00 seg</option>
+				<option value="1500">1.50 seg</option>
+				<option value="2000">2.00 seg</option>
+				<option value="2.00">2.00 seg</option>
+			</select>
+			<div id="play" class="btn">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+					<path fill="currentColor" d="M187.2 100.9C174.8 94.1 159.8 94.4 147.6 101.6C135.4 108.8 128 121.9 128 136L128 504C128 518.1 135.5 531.2 147.6 538.4C159.7 545.6 174.8 545.9 187.2 539.1L523.2 355.1C536 348.1 544 334.6 544 320C544 305.4 536 291.9 523.2 284.9L187.2 100.9z"/>
+				</svg>
+			</div>
+			<div id="pause" class="btn">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+					<path fill="currentColor" d="M176 96C149.5 96 128 117.5 128 144L128 496C128 522.5 149.5 544 176 544L240 544C266.5 544 288 522.5 288 496L288 144C288 117.5 266.5 96 240 96L176 96zM400 96C373.5 96 352 117.5 352 144L352 496C352 522.5 373.5 544 400 544L464 544C490.5 544 512 522.5 512 496L512 144C512 117.5 490.5 96 464 96L400 96z"/>
+				</svg>
+			</div>
+			<div id="stop" class="btn">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+					<path fill="currentColor" d="M160 96L480 96C515.3 96 544 124.7 544 160L544 480C544 515.3 515.3 544 480 544L160 544C124.7 544 96 515.3 96 480L96 160C96 124.7 124.7 96 160 96z"/>
+				</svg>
+			</div>
+			<select id="voz" class="select"></select>
+		</div>
+		<div class="contenedor">
+			<div id="visor" class="visor"></div>
+		</div>
+	</body>
+</html>
